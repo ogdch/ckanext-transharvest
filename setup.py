@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import sys, os
 
 version = '0.1'
 
@@ -24,8 +23,9 @@ setup(
 	],
 	entry_points=\
 	"""
-        [ckan.plugins]
-	# Add plugins here, eg
-	# myplugin=ckanext.transharvest:PluginClass
+    [ckan.plugins]
+	transharvest=ckanext.transharvest.harvester:TranslationHarvester
+	[paste.paster_command]
+	transharvest=ckanext.harvest.commands.harvester:Harvester
 	""",
 )
