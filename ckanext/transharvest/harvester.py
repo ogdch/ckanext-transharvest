@@ -36,11 +36,16 @@ class TranslationHarvester(HarvesterBase):
             raise urllib.HTTPError(data.get('error'))
 
     def gather_stage(self, harvest_job):
-        ckan_url = harvest_job.source.url
-        log.debug('Gathering %s' % ckan_url)
-
         try:
-            terms = self._get_terms(ckan_url)
+            config = json.loads(harvest_job.source.config)
+            ckan_term_url = config['ckan_term_url']
+        except Exception as e:
+            log.exception(e)
+            raise ConfigError("In order to run the translation harvester you need to specify 'ckan_term_url' in your harvester config json") 
+
+        log.debug('Gathering term from %s' % ckan_term_url)
+        try:
+            terms = self._get_terms(ckan_term_url)
 
             obj = HarvestObject(
                 job = harvest_job,
@@ -70,3 +75,6 @@ class TranslationHarvester(HarvesterBase):
         except Exception as e:
             log.exception(e)
             raise e
+
+class ConfigError(Exception):
+    pass
