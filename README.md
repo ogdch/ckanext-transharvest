@@ -1,7 +1,7 @@
 ckanext-transharvest
 ====================
 
-CKAN templates and translations for opendata.admin.ch
+This harvester has the purpose to transfer term translations from one CKAN instante to another.
 
 ## Installation
 
