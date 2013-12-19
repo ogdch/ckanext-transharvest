@@ -43,8 +43,9 @@ class TranslationHarvester(HarvesterBase):
         except Exception as e:
             log.exception(e)
             raise ConfigError(
-                "In order to run the translation harvester you need to specify"
-                + "'ckan_term_url' in your harvester config json"
+                "In order to run the translation harvester "
+                "you need to specify 'ckan_term_url' "
+                "in your harvester config json"
             )
 
         log.debug('Gathering term from %s' % ckan_term_url)
