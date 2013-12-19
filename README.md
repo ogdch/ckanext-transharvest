@@ -16,6 +16,10 @@ python setup.py develop
 
 Make sure to add `transharvest` to `ckan.plugins` in your config file.
 
+### For development
+* install the `pre-commit.sh` script as a pre-commit hook in your local repositories:
+** `ln -s ../../pre-commit.sh .git/hooks/pre-commit`
+
 ## Configuration
 
 This harvester requires `ckan_term_url` in the configuration JSON. This is the base URL of a CKAN instance, that should be harvested for term translations. Please make sure, that this remote CKAN instance needs the [ckanext-ogdch_actions](https://github.com/ogdch/ckanext-ogdch_actions), as this extensions provides the requires API for this harvester.
