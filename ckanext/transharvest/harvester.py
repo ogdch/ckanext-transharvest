@@ -11,6 +11,7 @@ from ckan.logic import action
 import logging
 log = logging.getLogger(__name__)
 
+
 class TranslationHarvester(HarvesterBase):
 
     def info(self):
@@ -26,7 +27,7 @@ class TranslationHarvester(HarvesterBase):
         '''
         action_path = 'api/3/action/term_translation_list'
         action_url = '%s/%s' % (ckan_url.rstrip('/'), action_path)
-        data_string = urllib.quote(json.dumps({'lang_code':''}))
+        data_string = urllib.quote(json.dumps({'lang_code': ''}))
         response = urllib2.urlopen(action_url, data_string)
         data = json.loads(response.read())
 
@@ -41,15 +42,18 @@ class TranslationHarvester(HarvesterBase):
             ckan_term_url = config['ckan_term_url']
         except Exception as e:
             log.exception(e)
-            raise ConfigError("In order to run the translation harvester you need to specify 'ckan_term_url' in your harvester config json") 
+            raise ConfigError(
+                "In order to run the translation harvester you need to specify"
+                + "'ckan_term_url' in your harvester config json"
+            )
 
         log.debug('Gathering term from %s' % ckan_term_url)
         try:
             terms = self._get_terms(ckan_term_url)
 
             obj = HarvestObject(
-                job = harvest_job,
-                content = json.dumps(terms)
+                job=harvest_job,
+                content=json.dumps(terms)
             )
             obj.save()
 
@@ -66,7 +70,7 @@ class TranslationHarvester(HarvesterBase):
         try:
             terms = json.loads(harvest_object.content)
 
-            log.debug('Importing %s term translations'% len(terms))
+            log.debug('Importing %s term translations' % len(terms))
 
             context = {'model': model, 'user': 'harvest'}
             for term in terms:
@@ -75,6 +79,7 @@ class TranslationHarvester(HarvesterBase):
         except Exception as e:
             log.exception(e)
             raise e
+
 
 class ConfigError(Exception):
     pass
