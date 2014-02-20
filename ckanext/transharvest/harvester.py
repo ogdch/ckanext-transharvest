@@ -77,6 +77,11 @@ class TranslationHarvester(HarvesterBase):
             for term in terms:
                 action.update.term_translation_update(context, term)
 
+            log.debug(
+                'Importing of the term translations completed '
+                'successfully.'
+            )
+
         except Exception as e:
             log.exception(e)
             raise e
